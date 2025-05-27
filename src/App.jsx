@@ -10,8 +10,8 @@ import DespesaForm from './components/despesaForm/DespesaForm';
 import DespesesLlista from './components/despesesLlista/DespesesLlista';
 import { onGetDespeses } from './firebase/firebase';
 
-
-/*function App() {
+/*
+function App() {
   const [mostrarDespeses, setMostrarDespeses] = useState(true);
   const [mostraModal, setMostraModal] = useState(false);
   const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false);
@@ -119,4 +119,6 @@ function App() {
     </Router>
   );
 }
+
+
 export default App

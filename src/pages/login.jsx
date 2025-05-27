@@ -1,16 +1,26 @@
 ///login_content = ''';
 //import { useState } from "react";
 import React, { useState } from 'react';
+import { auth, signInWithEmailAndPassword } from "../firebase/firebase";
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", email, password);
+    //console.log("Login:", email, password);
     // Aquí puedes llamar a Firebase auth si lo configuras
+        try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Sessió iniciada:", userCredential.user);
+      alert("Sessió iniciada correctament");
+    } catch (error) {
+      console.error("Error d'inici de sessió:", error.message);
+      alert("Error: " + error.message);
+    }
   };
+  
 
   return (
     <div>
@@ -32,6 +42,7 @@ export default function Login() {
         />
         <button type="submit">Entrar</button>
       </form>
-    </div>
-  );
-}
+      </div>
+    );
+  }
+

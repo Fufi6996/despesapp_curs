@@ -5,6 +5,7 @@ import { initializeApp } from "firebase/app"
 import { getFirestore, addDoc, collection, getDocs, onSnapshot, doc, deleteDoc } from "firebase/firestore"
 //import { getFirestore, addDoc, collection, getDocs, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.8.0/firebase-firestore.js"
 import { } from 'firebase/auth'; 
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,6 +21,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 export const saveDespesa = async (despesa) => {
   console.log(despesa);
@@ -37,3 +39,4 @@ export const onGetDespeses = (callback) =>
 export const deleteDespesa = async (id) => {
   deleteDoc(doc(db, "despeses", id));
 }
+export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
