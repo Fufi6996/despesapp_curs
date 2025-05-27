@@ -10,7 +10,7 @@ import DespesaForm from './components/despesaForm/DespesaForm';
 import DespesesLlista from './components/despesesLlista/DespesesLlista';
 import { onGetDespeses } from './firebase/firebase';
 
-/*
+
 function App() {
   const [mostrarDespeses, setMostrarDespeses] = useState(true);
   const [mostraModal, setMostraModal] = useState(false);
@@ -99,8 +99,8 @@ function App() {
     </div>
   )
 }
-*/
-function App() {
+
+/*function App() {
   return (
     <Router>
       <Navbar />
@@ -119,4 +119,5 @@ function App() {
     </Router>
   );
 }
+  */
 export default App
