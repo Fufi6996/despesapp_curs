@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Titol from './components/titol/Titol';
 import Modal from './components/modal/Modal';
 import DespesaForm from './components/despesaForm/DespesaForm';
@@ -7,7 +11,7 @@ import DespesesLlista from './components/despesesLlista/DespesesLlista';
 import { onGetDespeses } from './firebase/firebase';
 
 
-function App() {
+/*function App() {
   const [mostrarDespeses, setMostrarDespeses] = useState(true);
   const [mostraModal, setMostraModal] = useState(false);
   const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false);
@@ -67,7 +71,7 @@ function App() {
 
   return (
     <div>
-      <Titol titol="Benvinguts al Curs!!" subtitol={subtitol} />
+      <Titol titol="Despeses d'en Rafel" subtitol={subtitol} />
       {!mostrarDespeses &&
         (
           <div>
@@ -95,5 +99,24 @@ function App() {
     </div>
   )
 }
-
+*/
+function App() {
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={
+          <ProtectedRoute>
+            <>
+              <DespesaForm />
+              <DespesesLlista />
+            </>
+          </ProtectedRoute>
+        } />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
+}
 export default App
