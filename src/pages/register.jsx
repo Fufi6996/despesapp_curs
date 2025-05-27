@@ -1,5 +1,6 @@
 //register_content = '''
-import React, { useState } from 'react';
+import { useState } from "react";
+import { auth, createUserWithEmailAndPassword } from "../firebase/firebase";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -7,14 +8,20 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("Les contrasenyes no coincideixen");
       return;
     }
-    console.log("Register:", { email, name, password });
-    // Aquí puedes llamar a Firebase auth.createUserWithEmailAndPassword
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Usuari registrat:", userCredential.user);
+      alert("Usuari registrat correctament");
+    } catch (error) {
+      console.error("Error de registre:", error.message);
+      alert("Error: " + error.message);
+    }
   };
 
   return (
