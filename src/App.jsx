@@ -1,123 +1,23 @@
-import React, { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Titol from './components/titol/Titol';
-import Modal from './components/modal/Modal';
-import DespesaForm from './components/despesaForm/DespesaForm';
-import DespesesLlista from './components/despesesLlista/DespesesLlista';
-import { onGetDespeses } from './firebase/firebase';
-
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Inici from './pages/inici/Inici';
+import Login from './pages/login/Login';
+import Navbar from './components/navbar/Navbar';
+import DespesesDetall from './components/despesesDetall/DespesesDetall';
 
 function App() {
-  const [mostrarDespeses, setMostrarDespeses] = useState(true);
-  const [mostraModal, setMostraModal] = useState(false);
-  const [filtrarPerQuantia, setFiltrarPerQuantia] = useState(false);
-
-  console.log(mostraModal);
-
-  const [despeses, setDespeses] = useState(null);
-
-  // useEffect
-
-  //const [despeses, setDespeses] = useState([]);
-
-  //console.log(mostrarDespeses);
-
-  const subtitol = "React & Firebase!!";
-
-  useEffect(() =>{
-    onGetDespeses((querySnapshot)=>{
-      let resultats = [];
-
-      querySnapshot.forEach((doc)=>{
-        resultats.push({...doc.data(), id: doc.id});
-      });
-
-      console.log(resultats);
-      setDespeses(resultats);
-    })
-  }, []);
-
-  useEffect(() => {
-    setDespeses((despesesPrevies) => {
-      if(filtrarPerQuantia)
-        return despesesPrevies.filter((despesa) => despesa.quantia > 10.00);
-      else
-        return despesesPrevies;
-    })
-  }
-  , [filtrarPerQuantia])
-
-  const afegirDespesa = (despesa) => {
-    setDespeses((despesesPrevies) => {
-      return [...despesesPrevies, despesa];
-    }
-    );
-    setMostraModal(false);
-  };
-
-  const handleClick = (id) => {
-    setDespeses((despesesPrevies) => {
-      return despesesPrevies.filter((despesa) => id !== despesa.id)
-    })
-  }
-
-  const handleTancar = () => {
-    setMostraModal(false);
-  }
 
   return (
     <div>
-      <Titol titol="Despeses d'en Rafel" subtitol={subtitol} />
-      {!mostrarDespeses &&
-        (
-          <div>
-            <button onClick={() => setMostrarDespeses(true)}>Mostrar Despeses</button>
-          </div>
-        )
-      }
-      {mostrarDespeses &&
-        (
-          <div>
-            <button onClick={() => setMostrarDespeses(false)}>Ocultar Despeses</button>
-          </div>
-        )
-      }
-      {despeses && <DespesesLlista despeses={despeses} handleClick={handleClick} />}
-      {mostraModal && <Modal handleTancar={handleTancar} >
-        <DespesaForm afegirDespesa={afegirDespesa} />
-      </Modal>}
-      <div>
-        <button onClick={() => setMostraModal(true)}>Afegir Despesa</button>
-      </div>
-      <div>
-        <button onClick={() => setFiltrarPerQuantia(true)} >Filtrar</button>
-      </div>
+      <Navbar />
+        <Routes>
+          <Route path='/' element={<Inici />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/despesa/:id' element={<DespesesDetall />} />
+          <Route path='*' element={<Navigate to="/" replace />} />
+        </Routes>
     </div>
   )
 }
 
-/*function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={
-          <ProtectedRoute>
-            <>
-              <DespesaForm />
-              <DespesesLlista />
-            </>
-          </ProtectedRoute>
-        } />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </Router>
-  );
-}
-  */
 export default App
